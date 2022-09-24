@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  client:
+    build:
+      context: ./client/
+      # args:
+      #   - REACT_APP_SERVER_URL=http://localhost:9000
+      #   - ws://localhost:9000
+      #   - WDS_SOCKET_PORT=0
+    environment:
+      - REACT_APP_SERVER_URL=http://localhost:9000
+      - ws://localhost:9000
+      - WDS_SOCKET_PORT=0
+    container_name: client_container
+    volumes:
+      - ./client/:/usr/app
+      - /usr/app/node_modules
+    command: [ "npm", "start" ]
+    depends_on:
+      - server
+    ports:
+      - "8080:3000"
+    expose:
+      - 8080
+    restart: always
+    stdin_open: true
+    tty: true
+
+  server:
+    # image: server
+    build: ./server
+    container_name: server
+    restart: always
+    command: [ "npm", "start" ]
+    ports:
+      - "9000:9000"
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
