@@ -13,12 +13,10 @@ import {
 } from "mdb-react-ui-kit";
 import InputField from "../InputField";
 import { studentForm } from "../../constants";
-import { useSelector, useDispatch } from "react-redux";
-import { modalAction } from "../../redux/action";
+import { useSelector } from "react-redux";
 import { ModalLogic } from "./logic";
 
 export default function AppModal() {
-  const dispatch = useDispatch();
   const showModal = useSelector((state) => state.modal.show);
   const titleModal = useSelector((state) => state.modal.title);
   const userModal = useSelector((state) => state.modal.user);
@@ -30,7 +28,6 @@ export default function AppModal() {
     <MDBModal
       staticBackdrop
       show={showModal || false}
-      setShow={dispatch(modalAction())}
       tabIndex="-1"
       className="main-modal"
     >
@@ -41,7 +38,7 @@ export default function AppModal() {
             <MDBBtn
               className="btn-close"
               color="none"
-              onClick={()=>handleModalClose()}
+              onClick={() => handleModalClose()}
             ></MDBBtn>
           </MDBModalHeader>
           <MDBModalBody>
@@ -65,7 +62,7 @@ export default function AppModal() {
             <MDBBtn
               className="text-dark"
               color="light"
-              onClick={()=>handleModalClose()}
+              onClick={() => handleModalClose()}
             >
               Close
             </MDBBtn>
